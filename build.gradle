@@ -1,9 +1,12 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     id 'java'
+    id "com.vanniktech.maven.publish" version "0.28.0"
 }
 
 group = 'io.github.kshired'
-version = '0.1.0'
+version = '0.1.1'
 
 repositories {
     mavenCentral()
@@ -17,4 +20,41 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    coordinates(group, "ban-word-validator", version)
+
+    pom {
+        name = "ban-word-validator"
+        description = "Simple Java ban word validation library"
+        inceptionYear = "2024"
+        url = "https://github.com/kshired/ban-word-validator"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "kshired"
+                name = "kshired"
+                url = "https://github.com/kshired"
+            }
+        }
+        scm {
+            url = "https://github.com/kshired/ban-word-validator"
+            connection = "scm:git:git://github.com/kshired/ban-word-validator.git"
+            developerConnection = "scm:git:ssh://git@github.com/kshired/ban-word-validator.git"
+        }
+    }
+
+    signAllPublications()
 }
